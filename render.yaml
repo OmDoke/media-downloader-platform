@@ -1,0 +1,27 @@
+services:
+  # Backend API (Docker)
+  - type: web
+    name: video-downloader-api
+    env: docker
+    plan: free
+    rootDir: video-downloader-api
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: PORT
+        value: 8080
+
+  # Frontend App (Static Site)
+  - type: web
+    name: video-downloader-client
+    env: static
+    plan: free
+    rootDir: video-downloader-client
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        # This automatically grabs the live URL of the backend service created above
+        fromService:
+          type: web
+          name: video-downloader-api
+          envVarKey: RENDER_EXTERNAL_URL
