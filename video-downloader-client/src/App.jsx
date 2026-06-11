@@ -10,7 +10,7 @@ function App() {
         <Home />
       </main>
       <footer className="bg-gray-800 border-t border-gray-700 py-6 text-center text-gray-500 text-sm">
-        <p>Universal Video Downloader &copy; {new Date().getFullYear()} - Local Use Only</p>
+        <p>Video Downloader &copy; {new Date().getFullYear()}</p>
       </footer>
     </div>
   );

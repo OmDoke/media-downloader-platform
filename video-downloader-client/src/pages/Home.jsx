@@ -53,7 +53,7 @@ const Home = () => {
                     Download Any Video
                 </h1>
                 <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-                    Paste a link below to fetch video metadata and download in your preferred quality. 100% free and local.
+                    Paste a link below to fetch video metadata and download in your preferred quality. 100% free.
                 </p>
             </div>
 
