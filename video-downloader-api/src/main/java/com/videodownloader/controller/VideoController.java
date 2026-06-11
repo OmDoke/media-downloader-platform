@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 
 import java.io.InputStream;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/video")
 public class VideoController {
