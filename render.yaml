@@ -14,7 +14,6 @@ services:
   - type: web
     name: video-downloader-client
     env: static
-    plan: free
     rootDir: video-downloader-client
     buildCommand: npm install && npm run build
     staticPublishPath: ./dist
