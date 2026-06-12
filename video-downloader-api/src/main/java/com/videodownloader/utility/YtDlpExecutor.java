@@ -20,7 +20,7 @@ public class YtDlpExecutor {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public VideoInfoResponse fetchVideoInfo(String url) throws IOException, InterruptedException {
-        ProcessBuilder pb = new ProcessBuilder(ytDlpPath, "-J", "--flat-playlist", "--no-warnings", "--force-ipv4", url);
+        ProcessBuilder pb = new ProcessBuilder(ytDlpPath, "-J", "--flat-playlist", "--no-warnings", "--force-ipv4", "--geo-bypass", url);
         // Do not redirect error stream so we only read pure JSON from stdout
         Process process = pb.start();
 
@@ -115,7 +115,7 @@ public class YtDlpExecutor {
 
     public Process streamVideo(String url, String formatId) throws IOException {
         String format = (formatId == null || formatId.isEmpty()) ? "best" : formatId;
-        ProcessBuilder pb = new ProcessBuilder(ytDlpPath, "-f", format, "--force-ipv4", "-o", "-", url);
+        ProcessBuilder pb = new ProcessBuilder(ytDlpPath, "-f", format, "--force-ipv4", "--geo-bypass", "-o", "-", url);
         return pb.start();
     }
 }
