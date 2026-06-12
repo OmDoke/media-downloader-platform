@@ -15,8 +15,8 @@ WORKDIR /app
 # Install required dependencies: ffmpeg and python
 RUN apk add --no-cache ffmpeg python3 py3-pip
 
-# Install yt-dlp using pip
-RUN pip install yt-dlp --break-system-packages
+# Install yt-dlp nightly using pip
+RUN pip install -U https://github.com/yt-dlp/yt-dlp/archive/master.tar.gz --break-system-packages
 
 # Copy the built jar from the previous stage
 COPY --from=build /app/target/*.jar app.jar

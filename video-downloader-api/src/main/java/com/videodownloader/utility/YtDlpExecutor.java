@@ -20,19 +20,20 @@ public class YtDlpExecutor {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public VideoInfoResponse fetchVideoInfo(String url) throws IOException, InterruptedException {
-        ProcessBuilder pb = new ProcessBuilder(ytDlpPath, "-J", "--flat-playlist", url);
+        ProcessBuilder pb = new ProcessBuilder(ytDlpPath, "-J", "--flat-playlist", "--no-warnings", "--force-ipv4", url);
         // Do not redirect error stream so we only read pure JSON from stdout
         Process process = pb.start();
 
         String output = new String(process.getInputStream().readAllBytes());
+        String errorOutput = new String(process.getErrorStream().readAllBytes());
         int exitCode = process.waitFor();
 
         if (exitCode != 0) {
-            throw new RuntimeException("yt-dlp extraction failed: " + output);
+            throw new RuntimeException("yt-dlp extraction failed: " + (errorOutput.isEmpty() ? output : errorOutput));
         }
 
-        if (output == null || output.trim().isEmpty()) {
-            throw new RuntimeException("yt-dlp returned empty output");
+        if (output == null || output.trim().isEmpty() || output.trim().equals("null")) {
+            throw new RuntimeException("yt-dlp returned empty or null output. Error stream: " + errorOutput);
         }
 
         JsonNode root = objectMapper.readTree(output);
@@ -114,7 +115,7 @@ public class YtDlpExecutor {
 
     public Process streamVideo(String url, String formatId) throws IOException {
         String format = (formatId == null || formatId.isEmpty()) ? "best" : formatId;
-        ProcessBuilder pb = new ProcessBuilder(ytDlpPath, "-f", format, "-o", "-", url);
+        ProcessBuilder pb = new ProcessBuilder(ytDlpPath, "-f", format, "--force-ipv4", "-o", "-", url);
         return pb.start();
     }
 }
