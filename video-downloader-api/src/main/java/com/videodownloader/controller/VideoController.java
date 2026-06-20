@@ -38,7 +38,8 @@ public class VideoController {
     @GetMapping("/download")
     public ResponseEntity<StreamingResponseBody> downloadVideo(
             @RequestParam String url,
-            @RequestParam(required = false) String format) {
+            @RequestParam(required = false) String format,
+            @RequestParam(required = false, defaultValue = "false") boolean preview) {
         
         try {
             Process process = videoService.downloadVideo(url, format);
@@ -59,9 +60,12 @@ public class VideoController {
                 }
             };
 
+            String disposition = preview ? "inline" : "attachment; filename=\"video.mp4\"";
+            MediaType contentType = preview ? MediaType.parseMediaType("video/mp4") : MediaType.APPLICATION_OCTET_STREAM;
+
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"video.mp4\"")
-                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, disposition)
+                    .contentType(contentType)
                     .body(responseBody);
             
         } catch (Exception e) {

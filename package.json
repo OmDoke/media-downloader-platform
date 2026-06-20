@@ -1,0 +1,14 @@
+{
+  "name": "media-downloader-platform",
+  "version": "1.0.0",
+  "description": "Media Downloader Platform containing Spring Boot backend and React frontend",
+  "scripts": {
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": "mvn -f video-downloader-api/pom.xml clean spring-boot:run",
+    "start:frontend": "npm run dev --prefix video-downloader-client",
+    "install:all": "npm install --prefix video-downloader-client && mvn -f video-downloader-api/pom.xml clean install -DskipTests"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

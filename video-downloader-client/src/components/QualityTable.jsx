@@ -1,6 +1,6 @@
 import React from 'react';
 
-const QualityTable = ({ formats, onDownload, isDownloading }) => {
+const QualityTable = ({ formats, onDownload, onPreview, isDownloading }) => {
     if (!formats || formats.length === 0) return null;
 
     return (
@@ -21,7 +21,13 @@ const QualityTable = ({ formats, onDownload, isDownloading }) => {
                                 <td className="p-4 font-medium text-gray-100">{format.quality}</td>
                                 <td className="p-4 text-gray-400 uppercase text-sm font-mono">{format.extension}</td>
                                 <td className="p-4 text-gray-400">{format.approximateSize}</td>
-                                <td className="p-4 text-right">
+                                <td className="p-4 flex justify-end gap-2">
+                                    <button
+                                        onClick={() => onPreview(format.formatId)}
+                                        className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium rounded shadow hover:shadow-blue-500/30 transition-all transform active:scale-95"
+                                    >
+                                        Preview
+                                    </button>
                                     <button
                                         onClick={() => onDownload(format.formatId)}
                                         disabled={isDownloading}

@@ -13,8 +13,12 @@ export const fetchVideoInfo = async (url) => {
     return response.data;
 };
 
-export const getDownloadUrl = (url, formatId) => {
-    return `${API_BASE_URL}/video/download?url=${encodeURIComponent(url)}&format=${encodeURIComponent(formatId)}`;
+export const getDownloadUrl = (url, formatId, preview = false) => {
+    let downloadUrl = `${API_BASE_URL}/video/download?url=${encodeURIComponent(url)}&format=${encodeURIComponent(formatId)}`;
+    if (preview) {
+        downloadUrl += '&preview=true';
+    }
+    return downloadUrl;
 };
 
 export default api;

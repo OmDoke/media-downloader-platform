@@ -116,6 +116,8 @@ public class YtDlpExecutor {
     public Process streamVideo(String url, String formatId) throws IOException {
         String format = (formatId == null || formatId.isEmpty()) ? "best" : formatId;
         ProcessBuilder pb = new ProcessBuilder(ytDlpPath, "-f", format, "--force-ipv4", "--geo-bypass", "-o", "-", url);
+        // Discard stderr to prevent the process from hanging due to full stderr buffer (yt-dlp progress output)
+        pb.redirectError(ProcessBuilder.Redirect.DISCARD);
         return pb.start();
     }
 }

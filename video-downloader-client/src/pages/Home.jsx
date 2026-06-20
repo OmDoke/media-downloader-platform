@@ -46,6 +46,11 @@ const Home = () => {
         setTimeout(() => setIsDownloading(false), 2000);
     };
 
+    const handlePreview = (formatId) => {
+        const previewUrl = getDownloadUrl(currentUrl, formatId, true);
+        window.open(previewUrl, '_blank');
+    };
+
     return (
         <div className="max-w-4xl mx-auto py-8 px-4">
             <div className="text-center mb-12">
@@ -81,7 +86,7 @@ const Home = () => {
                         <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                         Available Qualities
                     </h3>
-                    <QualityTable formats={videoInfo.formats} onDownload={handleDownload} isDownloading={isDownloading} />
+                    <QualityTable formats={videoInfo.formats} onDownload={handleDownload} onPreview={handlePreview} isDownloading={isDownloading} />
                 </div>
             )}
         </div>
